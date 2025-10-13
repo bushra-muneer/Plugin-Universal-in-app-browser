@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.bushra.plugin_universal_in_app_browser">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity android:name="com.bushra.plugin_universal_in_app_browser.WrapperCustomTabActivity" android:exported="false" />
+    </application>
+
+</manifest>
