@@ -1,0 +1,27 @@
+name: plugin_universal_in_app_browser
+description: Universal in-app browser experience for Flutter apps.
+version: 0.1.1
+publish_to: "none"
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_inappwebview: ^6.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.bushra.plugin_universal_in_app_browser
+        pluginClass: PluginUniversalInAppBrowserPlugin
+      ios:
+        pluginClass: PluginUniversalInAppBrowserPlugin
