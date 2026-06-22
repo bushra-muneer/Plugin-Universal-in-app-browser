@@ -1,0 +1,36 @@
+# Dart and Flutter
+.dart_tool/
+.packages
+.pub/
+build/
+coverage/
+
+# Pub package output
+*.tar.gz
+
+# IDE and local files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+
+# Android local files
+android/.gradle/
+android/local.properties
+example/android/.gradle/
+example/android/local.properties
+
+# iOS and macOS generated files
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/ephemeral/
+example/ios/Pods/
+example/ios/.symlinks/
+example/ios/Flutter/ephemeral/
+example/macos/Pods/
+example/macos/.symlinks/
+example/macos/Flutter/ephemeral/
+
+# Windows/Linux generated files
+example/windows/flutter/ephemeral/
+example/linux/flutter/ephemeral/
