@@ -176,7 +176,6 @@ class _EmbeddedWebViewPage extends StatefulWidget {
   final Map<String, String>? initialHeaders;
 
   const _EmbeddedWebViewPage({
-    super.key,
     required this.url,
     required this.options,
     this.initialHeaders,
