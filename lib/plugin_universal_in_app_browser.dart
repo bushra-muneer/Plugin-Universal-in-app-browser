@@ -9,7 +9,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 const MethodChannel _channel = MethodChannel('plugin_universal_in_app_browser');
 
 /// Broadcast stream of platform/browser events (opened, dismissed, navigation, errors)
-final StreamController<Map<String, dynamic>> _eventController = StreamController<Map<String, dynamic>>.broadcast();
+final StreamController<Map<String, dynamic>> _eventController =
+    StreamController<Map<String, dynamic>>.broadcast();
 
 Stream<Map<String, dynamic>> get browserEvents => _eventController.stream;
 
@@ -91,7 +92,8 @@ class UniversalInAppBrowser {
     await _ensureChannelHandler();
     final sanitized = WebUri(url);
     if (sanitized.scheme.isEmpty) {
-      throw ArgumentError.value(url, 'url', 'A valid scheme (eg. https) is required.');
+      throw ArgumentError.value(
+          url, 'url', 'A valid scheme (eg. https) is required.');
     }
 
     final payload = <String, dynamic>{
@@ -138,12 +140,14 @@ class UniversalInAppBrowser {
 
     final sanitized = WebUri(url);
     if (sanitized.scheme.isEmpty) {
-      throw ArgumentError.value(url, 'url', 'A valid scheme (eg. https) is required.');
+      throw ArgumentError.value(
+          url, 'url', 'A valid scheme (eg. https) is required.');
     }
 
     final headers = options?.headers;
 
-    final result = await Navigator.of(context).push<EmbeddedWebViewController?>(MaterialPageRoute<EmbeddedWebViewController?>(
+    final result = await Navigator.of(context).push<EmbeddedWebViewController?>(
+        MaterialPageRoute<EmbeddedWebViewController?>(
       builder: (ctx) => _EmbeddedWebViewPage(
         url: sanitized.toString(),
         options: options ?? const BrowserOptions(),
@@ -168,7 +172,9 @@ class _EmbeddedWebViewPage extends StatefulWidget {
   final BrowserOptions options;
   final Map<String, String>? initialHeaders;
 
-  const _EmbeddedWebViewPage({Key? key, required this.url, required this.options, this.initialHeaders}) : super(key: key);
+  const _EmbeddedWebViewPage(
+      {Key? key, required this.url, required this.options, this.initialHeaders})
+      : super(key: key);
 
   @override
   State<_EmbeddedWebViewPage> createState() => _EmbeddedWebViewPageState();
@@ -193,22 +199,27 @@ class _EmbeddedWebViewPageState extends State<_EmbeddedWebViewPage> {
         ),
       ),
       body: InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri(widget.url), headers: widget.initialHeaders),
+        initialUrlRequest:
+            URLRequest(url: WebUri(widget.url), headers: widget.initialHeaders),
         onWebViewCreated: (controller) {
           _controller = controller;
           // when webview is ready, return a controller to the caller
           // schedule after frame so push completes
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (Navigator.of(context).canPop()) {
-              Navigator.of(context).pop(EmbeddedWebViewController._fromController(_controller!, _jsHandlers));
+              Navigator.of(context).pop(
+                  EmbeddedWebViewController._fromController(
+                      _controller!, _jsHandlers));
             }
           });
         },
         onLoadStart: (controller, uri) {
-          _eventController.add({'event': 'pageStarted', 'url': uri?.toString()});
+          _eventController
+              .add({'event': 'pageStarted', 'url': uri?.toString()});
         },
         onLoadStop: (controller, uri) {
-          _eventController.add({'event': 'pageFinished', 'url': uri?.toString()});
+          _eventController
+              .add({'event': 'pageFinished', 'url': uri?.toString()});
         },
         onConsoleMessage: (controller, consoleMessage) {
           // forward console messages if desired
@@ -270,7 +281,8 @@ class EmbeddedWebViewController {
     if (c == null) throw StateError('WebView not ready');
     if (_disposed) throw StateError('WebView controller disposed');
     // best-effort: use evaluateJavascript to post a message to the page
-    final safe = "(function(){try{window.postMessage(${_jsEscape(message)}, '*');}catch(e){}})();";
+    final safe =
+        "(function(){try{window.postMessage(${_jsEscape(message)}, '*');}catch(e){}})();";
     try {
       await c.evaluateJavascript(source: safe);
     } catch (_) {}
@@ -282,16 +294,19 @@ class EmbeddedWebViewController {
   }
 
   /// Add a JavaScript handler that page JS can call via `window.flutter_inappwebview.callHandler(handlerName, ...args)`
-  Future<void> addJavascriptHandler(String handlerName, Function(dynamic) handler) async {
+  Future<void> addJavascriptHandler(
+      String handlerName, Function(dynamic) handler) async {
     final c = _controller;
     if (c == null) throw StateError('WebView not ready');
     if (_disposed) throw StateError('WebView controller disposed');
     _jsHandlers[handlerName] = handler;
-    c.addJavaScriptHandler(handlerName: handlerName, callback: (args) {
-      try {
-        handler(args.length == 1 ? args[0] : args);
-      } catch (_) {}
-    });
+    c.addJavaScriptHandler(
+        handlerName: handlerName,
+        callback: (args) {
+          try {
+            handler(args.length == 1 ? args[0] : args);
+          } catch (_) {}
+        });
   }
 
   /// Remove a JavaScript handler

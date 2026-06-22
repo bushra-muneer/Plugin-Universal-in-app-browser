@@ -16,7 +16,8 @@ void main() {
     // relying on pumpAndSettle, poll for the main UI button to appear.
     final openEmbeddedFinder = find.text('Open Embedded WebView');
     final initDeadline = DateTime.now().add(const Duration(seconds: 30));
-    while (DateTime.now().isBefore(initDeadline) && openEmbeddedFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(initDeadline) &&
+        openEmbeddedFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     // allow the frame to settle a little before interacting
@@ -24,7 +25,8 @@ void main() {
 
     // Find and tap the Open Embedded WebView button (wait up to 10s)
     final openDeadline = DateTime.now().add(const Duration(seconds: 10));
-    while (DateTime.now().isBefore(openDeadline) && openEmbeddedFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(openDeadline) &&
+        openEmbeddedFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     expect(openEmbeddedFinder, findsOneWidget);
@@ -48,7 +50,8 @@ void main() {
 
     // Wait for the initial handler call (page calls handler on load)
     final deadline = DateTime.now().add(const Duration(seconds: 10));
-    while (DateTime.now().isBefore(deadline) && handlerLogFinder().evaluate().isEmpty) {
+    while (DateTime.now().isBefore(deadline) &&
+        handlerLogFinder().evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
 
@@ -66,7 +69,8 @@ void main() {
     // Count handler logs so far
     var beforeCount = handlerLogFinder().evaluate().length;
     final postDeadline = DateTime.now().add(const Duration(seconds: 10));
-    while (DateTime.now().isBefore(postDeadline) && postMsgFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(postDeadline) &&
+        postMsgFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     expect(postMsgFinder, findsOneWidget);
@@ -93,20 +97,22 @@ void main() {
     // Now remove the handler
     final removeFinder = find.text('Remove Handler');
     final removeDeadline = DateTime.now().add(const Duration(seconds: 10));
-    while (DateTime.now().isBefore(removeDeadline) && removeFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(removeDeadline) &&
+        removeFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
-  expect(removeFinder, findsOneWidget);
-  await tester.tap(removeFinder);
-  // allow UI to update
-  await tester.pump(const Duration(milliseconds: 500));
+    expect(removeFinder, findsOneWidget);
+    await tester.tap(removeFinder);
+    // allow UI to update
+    await tester.pump(const Duration(milliseconds: 500));
 
     // Tap Post Message again and assert Flutter still posts the message (we
     // can't reliably assert the handler is not called on all environments).
     beforeCount = handlerLogFinder().evaluate().length;
     await tester.tap(postMsgFinder);
     final afterMsgDeadline = DateTime.now().add(const Duration(seconds: 6));
-    while (DateTime.now().isBefore(afterMsgDeadline) && postMessageLogFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(afterMsgDeadline) &&
+        postMessageLogFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     expect(postMessageLogFinder, findsWidgets);
@@ -114,7 +120,8 @@ void main() {
     // Finally, dispose the embedded controller
     final disposeFinder = find.text('Dispose');
     final disposeDeadline = DateTime.now().add(const Duration(seconds: 10));
-    while (DateTime.now().isBefore(disposeDeadline) && disposeFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(disposeDeadline) &&
+        disposeFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     expect(disposeFinder, findsOneWidget);
@@ -122,7 +129,8 @@ void main() {
     // Wait for the disposed log to appear
     final disposedFinder = find.textContaining('embedded disposed');
     final disposedDeadline = DateTime.now().add(const Duration(seconds: 8));
-    while (DateTime.now().isBefore(disposedDeadline) && disposedFinder.evaluate().isEmpty) {
+    while (DateTime.now().isBefore(disposedDeadline) &&
+        disposedFinder.evaluate().isEmpty) {
       await tester.pump(const Duration(milliseconds: 200));
     }
     expect(disposedFinder, findsOneWidget);

@@ -1,0 +1,19 @@
+.github/
+.dart_tool/
+build/
+coverage/
+*.tar.gz
+pubspec.lock
+.DS_Store
+.idea/
+.vscode/
+
+# Local platform build folders
+android/.gradle/
+android/local.properties
+example/android/.gradle/
+example/android/local.properties
+example/ios/Pods/
+example/ios/.symlinks/
+example/macos/Pods/
+example/macos/.symlinks/

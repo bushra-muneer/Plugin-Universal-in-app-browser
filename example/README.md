@@ -1,46 +1,52 @@
 # Universal In-App Browser Example
 
-This Flutter app demonstrates how to integrate the Universal In-App Browser
-plugin in a real project. The UI provides a single button that launches
-`https://flutter.dev` inside the universal browser interface once the plugin
-implementation is available.
+This example app shows how the plugin feels inside a real Flutter screen.
 
-## Prerequisites
-- Flutter 3.x installed (`flutter --version`)
-- An emulator or device for the platform you wish to run
+It currently demonstrates:
 
-## Running the Example
+- opening `https://flutter.dev` in the native in-app browser
+- opening an embedded WebView
+- listening to browser events
+- calling JavaScript from Flutter
+- receiving a simple JavaScript handler call
+- posting a message into the embedded page
+- accessing the underlying `flutter_inappwebview` controller
+
+## Run the example
+
 ```sh
+cd example
 flutter pub get
-flutter run -d chrome # or ios, android, windows, macos, linux
+flutter run
 ```
 
-The app uses the local path dependency declared in `pubspec.yaml`, so ensure you
-are running the app from inside the `example/` directory or pass `--target`
-accordingly.
+Use a real Android or iOS device/emulator when checking the native browser flow.
 
-## Notes
-- Error handling is included to surface issues while the plugin API is taking
-  shape. The snack bar will display errors returned by the browser invocation.
-- The plugin is still under development; the example may require updates as the
-  API evolves.
+## Platform notes
 
-## Platform Setup (One-Time)
-- **Android**
-  - Flutter templates already target `minSdkVersion` 21; confirm that value in `android/app/build.gradle`.
-  - Ensure `android/app/src/main/AndroidManifest.xml` includes the internet permission:
-    ```xml
-    <uses-permission android:name="android.permission.INTERNET" />
-    ```
-- **iOS**
-  - Set the deployment target to at least iOS 12 in `ios/Podfile`.
-  - Add the App Transport Security configuration to `ios/Runner/Info.plist` so the embedded browser can reach external URLs:
-    ```xml
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-      <key>NSAllowsArbitraryLoadsInWebContent</key>
-      <true/>
-    </dict>
-    ```
+### Android
+
+Make sure the app has internet permission:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+### iOS
+
+Use iOS 12 or higher. If you load non-HTTPS content during local testing, update `Info.plist` carefully for that development case only.
+
+## Developer checks
+
+From the package root:
+
+```sh
+flutter analyze
+flutter test
+```
+
+From this example folder:
+
+```sh
+flutter analyze
+```

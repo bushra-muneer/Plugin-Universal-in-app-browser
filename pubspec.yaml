@@ -1,7 +1,16 @@
 name: plugin_universal_in_app_browser
-description: Universal in-app browser experience for Flutter apps.
+description: A lightweight Flutter plugin for opening web content through a simple universal in-app browser API.
 version: 0.1.1
-publish_to: "none"
+homepage: https://github.com/bushra-muneer/Plugin-Universal-in-app-browser
+repository: https://github.com/bushra-muneer/Plugin-Universal-in-app-browser
+issue_tracker: https://github.com/bushra-muneer/Plugin-Universal-in-app-browser/issues
+documentation: https://github.com/bushra-muneer/Plugin-Universal-in-app-browser#readme
+topics:
+  - browser
+  - webview
+  - custom-tabs
+  - safari-view-controller
+  - in-app-browser
 
 environment:
   sdk: ">=2.19.0 <4.0.0"

@@ -145,7 +145,8 @@ class _BrowserDemoScreenState extends State<BrowserDemoScreen> {
   Future<void> _evalJsInEmbedded() async {
     if (_embeddedController == null) return;
     try {
-      final res = await _embeddedController!.evaluateJavascript('(function(){return document.title||\'embedded\';})()');
+      final res = await _embeddedController!.evaluateJavascript(
+          '(function(){return document.title||\'embedded\';})()');
       setState(() => _logs.insert(0, 'eval result: $res'));
     } catch (e) {
       setState(() => _logs.insert(0, 'eval error: $e'));
@@ -221,18 +222,23 @@ class _BrowserDemoScreenState extends State<BrowserDemoScreen> {
                     FilledButton.tonal(
                       onPressed: () async {
                         if (_embeddedController == null) return;
-                        final underlying = _embeddedController!.getUnderlyingController();
+                        final underlying =
+                            _embeddedController!.getUnderlyingController();
                         if (underlying == null) {
-                          setState(() => _logs.insert(0, 'Underlying controller not available'));
+                          setState(() => _logs.insert(
+                              0, 'Underlying controller not available'));
                           return;
                         }
                         try {
                           final cur = await underlying.getUrl();
-                          setState(() => _logs.insert(0, 'underlying.getUrl(): ${cur?.toString()}'));
+                          setState(() => _logs.insert(
+                              0, 'underlying.getUrl(): ${cur?.toString()}'));
                           await underlying.reload();
-                          setState(() => _logs.insert(0, 'underlying.reload() called'));
+                          setState(() =>
+                              _logs.insert(0, 'underlying.reload() called'));
                         } catch (e) {
-                          setState(() => _logs.insert(0, 'underlying call error: $e'));
+                          setState(() =>
+                              _logs.insert(0, 'underlying call error: $e'));
                         }
                       },
                       child: const Text('Use underlying controller'),
