@@ -136,6 +136,8 @@ class UniversalInAppBrowser {
     String url, {
     BrowserOptions? options,
   }) async {
+    final navigator = Navigator.of(context);
+
     await _ensureChannelHandler();
 
     final sanitized = WebUri(url);
@@ -146,14 +148,15 @@ class UniversalInAppBrowser {
 
     final headers = options?.headers;
 
-    final result = await Navigator.of(context).push<EmbeddedWebViewController?>(
-        MaterialPageRoute<EmbeddedWebViewController?>(
-      builder: (ctx) => _EmbeddedWebViewPage(
-        url: sanitized.toString(),
-        options: options ?? const BrowserOptions(),
-        initialHeaders: headers,
+    final result = await navigator.push<EmbeddedWebViewController?>(
+      MaterialPageRoute<EmbeddedWebViewController?>(
+        builder: (ctx) => _EmbeddedWebViewPage(
+          url: sanitized.toString(),
+          options: options ?? const BrowserOptions(),
+          initialHeaders: headers,
+        ),
       ),
-    ));
+    );
     return result;
   }
 
@@ -172,9 +175,12 @@ class _EmbeddedWebViewPage extends StatefulWidget {
   final BrowserOptions options;
   final Map<String, String>? initialHeaders;
 
-  const _EmbeddedWebViewPage(
-      {Key? key, required this.url, required this.options, this.initialHeaders})
-      : super(key: key);
+  const _EmbeddedWebViewPage({
+    super.key,
+    required this.url,
+    required this.options,
+    this.initialHeaders,
+  });
 
   @override
   State<_EmbeddedWebViewPage> createState() => _EmbeddedWebViewPageState();
