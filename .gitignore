@@ -5,8 +5,11 @@
 build/
 coverage/
 
-# Pub package output
+# Package output
 *.tar.gz
+
+# Root package lockfile is generated for local development
+pubspec.lock
 
 # IDE and local files
 .idea/
